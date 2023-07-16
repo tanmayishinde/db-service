@@ -1,0 +1,22 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: db-service
+  datasource:
+    driver: ${db-driver}
+    url: ${db-url}
+    username: ${db-username}
+    password: ${db-password}
+  cloud:
+    config:
+      enabled: true
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        preferIpAddress: true
+        instanceId: ${spring.application.name}:${server.address}:${server.port}
+        port: ${server.port}
+        healthCheckPath: /db/actuator/health
+        healthCheckInterval: 1s
