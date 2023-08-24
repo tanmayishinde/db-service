@@ -3,6 +3,10 @@ spring:
     allow-bean-definition-overriding: true
   application:
     name: db-service
+  jpa:
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
   datasource:
     driver: ${db-driver}
     url: ${db-url}

@@ -4,7 +4,6 @@ import com.root.dbservice.entities.UserEntity;
 import com.root.dbservice.repo.UserRepo;
 import com.root.dbservice.service.UserService;
 import com.root.dbservice.vo.UserVO;
-import com.root.redis.exception.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +16,7 @@ public class UserServiceImpl implements UserService {
     private UserRepo userRepo;
 
     @Override
-    public UserVO getUserByEmail(String email) throws ValidationException {
+    public UserVO getUserByEmail(String email){
         UserVO userVO = new UserVO();
         Optional<UserEntity> userEntityOptional = userRepo.findByEmail(email);
         if(userEntityOptional.isPresent()){
