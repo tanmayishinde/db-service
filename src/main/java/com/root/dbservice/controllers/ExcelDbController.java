@@ -1,6 +1,7 @@
 package com.root.dbservice.controllers;
 
 
+import com.root.commondependencies.exception.ValidationException;
 import com.root.commondependencies.vo.DefaultResponseVO;
 import com.root.commondependencies.vo.ParsedDataVO;
 import com.root.dbservice.service.ExcelDbService;
@@ -17,7 +18,7 @@ public class ExcelDbController {
     @Autowired
     private ExcelDbService excelDbService;
     @PostMapping("/import-data")
-    public DefaultResponseVO saveExcelData(@RequestBody ParsedDataVO parsedData){
+    public DefaultResponseVO saveExcelData(@RequestBody ParsedDataVO parsedData) throws ValidationException {
         return excelDbService.saveParsedData(parsedData);
     }
 
