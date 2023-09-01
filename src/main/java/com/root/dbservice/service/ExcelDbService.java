@@ -1,10 +1,10 @@
 package com.root.dbservice.service;
 
+import com.root.commondependencies.exception.ValidationException;
 import com.root.commondependencies.vo.DefaultResponseVO;
 import com.root.commondependencies.vo.ParsedDataVO;
 
 public interface ExcelDbService {
-
-    DefaultResponseVO saveParsedData(ParsedDataVO parsedData);
+    DefaultResponseVO saveParsedData(ParsedDataVO parsedData) throws ValidationException;
 
 }
