@@ -12,7 +12,7 @@ import com.root.dbservice.repo.MonthlyPlanRepo;
 import com.root.dbservice.repo.ProductChildPartRepo;
 import com.root.dbservice.repo.ProductRepo;
 import com.root.dbservice.service.AsyncService;
-import com.root.commondependencies.vo.ProductChildPartVO;
+import com.root.commondependencies.vo.ProductChildPartRelationShipVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -110,9 +110,9 @@ public class ParsedDataHelper {
 //        }
 //        return childPartVOList;
 //    }
-    public List<ProductChildPartVO> getProductChildPartVOList() {
-        List<ProductChildPartVO> productChildPartVOList = new ArrayList<>();
-        ProductChildPartVO productChildPartVOObj = new ProductChildPartVO();
+    public List<ProductChildPartRelationShipVO> getProductChildPartVOList() {
+        List<ProductChildPartRelationShipVO> productChildPartVOList = new ArrayList<>();
+        ProductChildPartRelationShipVO productChildPartVOObj = new ProductChildPartRelationShipVO();
 
         List<ProductChildPartEntity> productChildPartEntityList = productChildPartRepo.findAll();
         for (ProductChildPartEntity pCEnity : productChildPartEntityList) {

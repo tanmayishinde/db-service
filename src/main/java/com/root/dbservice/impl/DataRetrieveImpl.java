@@ -3,10 +3,9 @@ package com.root.dbservice.impl;
 import com.root.commondependencies.displayvo.ChildPartDisplayVO;
 import com.root.commondependencies.displayvo.ChildPartQuantityVO;
 import com.root.commondependencies.displayvo.ProductDisplayVO;
-import com.root.commondependencies.vo.ChildPartVO;
 import com.root.commondependencies.vo.CreationDateVO;
 import com.root.commondependencies.vo.MonthlyPlanEntityVO;
-import com.root.commondependencies.vo.ProductChildPartVO;
+import com.root.commondependencies.vo.ProductChildPartRelationShipVO;
 import com.root.dbservice.entities.ChildPartEntity;
 import com.root.dbservice.entities.MonthlyPlanEntity;
 import com.root.dbservice.entities.ProductChildPartEntity;
@@ -80,33 +79,29 @@ public class DataRetrieveImpl implements DataRetrieveService {
     public Map<Long, List<ChildPartQuantityVO>> getProductChildPartList() {
         List<ProductChildPartEntity> productChildPartEntityList = productChildPartRepo.findAll();
 
-        List<ProductChildPartVO> productChildPartVOList = new ArrayList<>();
+        List<ProductChildPartRelationShipVO> productChildPartVOList = new ArrayList<>();
         for (ProductChildPartEntity productChildPart : productChildPartEntityList) {
-            ProductChildPartVO productChildPartVO = new ProductChildPartVO();
+            ProductChildPartRelationShipVO productChildPartVO = new ProductChildPartRelationShipVO();
             productChildPartVO.setProductId(productChildPart.getProductId());
             productChildPartVO.setChildPartId(productChildPart.getChildPartId());
             productChildPartVO.setChildPartQuantity(productChildPart.getQuantity());
             productChildPartVOList.add(productChildPartVO);
         }
         Map<Long, List<ChildPartQuantityVO>> partQuantityVOMap = new HashMap<>();
-        List<ChildPartQuantityVO> childPartQuantityVOList = new ArrayList<>();
-        for (ProductChildPartVO productChildPartVO : productChildPartVOList) {
+        for (ProductChildPartRelationShipVO productChildPartVO : productChildPartVOList) {
             if (partQuantityVOMap.containsKey(productChildPartVO.getProductId())) {
                 ChildPartQuantityVO childPartQuantityVO = new ChildPartQuantityVO();
                 childPartQuantityVO.setChildPartId(productChildPartVO.getChildPartId());
                 childPartQuantityVO.setChildPartQuantity(productChildPartVO.getChildPartQuantity());
-                childPartQuantityVOList.add(childPartQuantityVO);
+                partQuantityVOMap.get(productChildPartVO.getProductId()).add(childPartQuantityVO);
             } else {
-                childPartQuantityVOList = new ArrayList<>();
+                List<ChildPartQuantityVO> childPartQuantityVOList = new ArrayList<>();
                 ChildPartQuantityVO childPartQuantityVO = new ChildPartQuantityVO();
                 childPartQuantityVO.setChildPartId(productChildPartVO.getChildPartId());
                 childPartQuantityVO.setChildPartQuantity(productChildPartVO.getChildPartQuantity());
                 childPartQuantityVOList.add(childPartQuantityVO);
                 partQuantityVOMap.put(productChildPartVO.getProductId(), childPartQuantityVOList);
-                continue;
             }
-
-            partQuantityVOMap.put(productChildPartVO.getProductId(), childPartQuantityVOList);
         }
 
         return partQuantityVOMap;
@@ -147,11 +142,11 @@ public class DataRetrieveImpl implements DataRetrieveService {
     }
 
     @Override
-    public List<ProductChildPartVO> getproductChildPartRelationshipList() {
-        List<ProductChildPartVO> productChildPartVOList=new ArrayList<>();
+    public List<ProductChildPartRelationShipVO> getproductChildPartRelationshipList() {
+        List<ProductChildPartRelationShipVO> productChildPartVOList=new ArrayList<>();
         List<ProductChildPartEntity> productChildPartEntityList = productChildPartRepo.findAll();
         for (ProductChildPartEntity productChildPartEntity : productChildPartEntityList) {
-            ProductChildPartVO productChildPartVO = new ProductChildPartVO();
+            ProductChildPartRelationShipVO productChildPartVO = new ProductChildPartRelationShipVO();
             productChildPartVO.setId(productChildPartEntity.getId());
             productChildPartVO.setProductId(productChildPartEntity.getProductId());
             productChildPartVO.setChildPartId(productChildPartEntity.getChildPartId());
