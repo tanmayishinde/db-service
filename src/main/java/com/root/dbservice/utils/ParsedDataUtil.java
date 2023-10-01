@@ -40,7 +40,9 @@ public final class ParsedDataUtil {
     }
 
     public static List<ProductChildPartEntity> getProductChildPartRelationshipList(
-            List<ProductVO> productList, List<ProductEntity> productEntities, List<ChildPartEntity> childPartEntities) {
+            List<ProductVO> productList,
+            List<ProductEntity> productEntities,
+            List<ChildPartEntity> childPartEntities) {
         List<ProductChildPartEntity> productChildPartList = new ArrayList<>();
 
         Map<String,Long> productMap = new HashMap<>();

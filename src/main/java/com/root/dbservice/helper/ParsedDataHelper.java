@@ -1,10 +1,8 @@
 package com.root.dbservice.helper;
 
+import com.root.commondependencies.displayvo.ProductDisplayVO;
 import com.root.commondependencies.exception.ValidationException;
-import com.root.commondependencies.vo.ChildPartVO;
-import com.root.commondependencies.vo.MonthlyPlanVO;
-import com.root.commondependencies.vo.ParsedDataVO;
-import com.root.commondependencies.vo.ProductVO;
+import com.root.commondependencies.vo.*;
 import com.root.dbservice.entities.ChildPartEntity;
 import com.root.dbservice.entities.MonthlyPlanEntity;
 import com.root.dbservice.entities.ProductChildPartEntity;
@@ -14,11 +12,12 @@ import com.root.dbservice.repo.MonthlyPlanRepo;
 import com.root.dbservice.repo.ProductChildPartRepo;
 import com.root.dbservice.repo.ProductRepo;
 import com.root.dbservice.service.AsyncService;
-import com.root.dbservice.utils.ParsedDataUtil;
+import com.root.commondependencies.vo.ProductChildPartVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -31,12 +30,13 @@ public class ParsedDataHelper {
     private final MonthlyPlanRepo monthlyPlanRepo;
 
     private final AsyncService asyncService;
+
     @Autowired
     public ParsedDataHelper(ProductRepo productRepo,
                             ChildPartRepo childPartRepo,
                             ProductChildPartRepo productChildPartRepo,
                             MonthlyPlanRepo monthlyPlanRepo,
-                            AsyncService asyncService){
+                            AsyncService asyncService) {
         this.productRepo = productRepo;
         this.childPartRepo = childPartRepo;
         this.productChildPartRepo = productChildPartRepo;
@@ -76,4 +76,54 @@ public class ParsedDataHelper {
         }
 
     }
+
+    public List<ProductDisplayVO> getProductVOList() {
+        List<ProductDisplayVO> productVOList = new ArrayList<>();
+        ProductDisplayVO productVO = new ProductDisplayVO();
+
+        List<ProductEntity> productEntityList = productRepo.findAll();
+        for (ProductEntity product : productEntityList) {
+            productVO.setProductName(product.getProductName());
+            productVO.setProductSeries(product.getProductSeries());
+            productVO.setProductOpeningStock(product.getProductOpeningStock());
+            productVOList.add(productVO);
+        }
+        return productVOList;
+    }
+
+
+    //    public List<ChildPartVO> getChildV0List(List<ProductChildPartVO> getProductChildPartVOList) {
+//        List<ChildPartsCoverageVO> childPartVOList = new ArrayList<>();
+//        ChildPartsCoverageVO childPartVO = new ChildPartsCoverageVO();
+//        Pro
+//
+//        List<ChildPartEntity> childPartEntityList = childPartRepo.findAll();
+//        for (ChildPartEntity childPart : childPartEntityList) {
+//
+//            childPartVO.setChildPartName(childPart.getChildPartName());
+//            childPartVO.setChildPartSeries(childPart.getChildPartSeries());
+//            childPartVO.setQuantity(getProductChildPartVOList.get();
+//            childPartVO.setChildPWeek1(ch)
+//                    childPart.getChildPartOpeningStock());
+//            childPartVO.setChildPWeek1(childPart.ge);
+//            childPartVOList.add(childPartVO);
+//        }
+//        return childPartVOList;
+//    }
+    public List<ProductChildPartVO> getProductChildPartVOList() {
+        List<ProductChildPartVO> productChildPartVOList = new ArrayList<>();
+        ProductChildPartVO productChildPartVOObj = new ProductChildPartVO();
+
+        List<ProductChildPartEntity> productChildPartEntityList = productChildPartRepo.findAll();
+        for (ProductChildPartEntity pCEnity : productChildPartEntityList) {
+            productChildPartVOObj.setChildPartId(pCEnity.getChildPartId());
+            productChildPartVOObj.setProductId(pCEnity.getProductId());
+            productChildPartVOObj.setChildPartQuantity(pCEnity.getQuantity());
+            productChildPartVOList.add(productChildPartVOObj);
+        }
+        return productChildPartVOList;
+    }
+
+
+
 }
