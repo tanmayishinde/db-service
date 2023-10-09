@@ -13,7 +13,6 @@ import java.util.Map;
 public interface DataRetrieveService {
     List<ProductDisplayVO> getProductList();
     List<ChildPartDisplayVO> getChildPartList();
-    Map<Long,List<ChildPartQuantityVO>> getProductChildPartList();
     List<MonthlyPlanEntityVO> getMonthlyPlanVOList(CreationDateVO creationDateVO);
 
     List<ProductChildPartRelationShipVO> getproductChildPartRelationshipList();

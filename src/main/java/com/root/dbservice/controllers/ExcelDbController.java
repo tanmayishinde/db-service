@@ -23,21 +23,4 @@ public class ExcelDbController {
         return excelDbService.saveParsedData(parsedData);
     }
 
-    @GetMapping("/getMonthlyPlanList")
-    public MonthlyPlanResponseVO getMonthlyPlanList(@RequestBody CreationDateVO creationDateVO){
-        return excelDbService.getMonthlyPlanList(creationDateVO);
-    }
-    @GetMapping("/product-list")
-    public List<ProductDisplayVO> getProductList(){
-        return  excelDbService.getProductList();
-    }
-    @GetMapping("/productChildPart-list")
-    public List<ProductChildPartDisplayVO> getProductChildPartList(){
-        return  excelDbService.getProductChildPartList();
-    }
-//    @GetMapping("/childPartWeeklyPlan-list")
-//    public List<ChildPartWeeklyPlan> childPartWeeklyPlan(){
-//        return  excelDbService.getchildPartWeeklyPlan();
-//    }
-
 }

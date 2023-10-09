@@ -34,10 +34,6 @@ public class DataRetrieveController {
     public List<ProductChildPartRelationShipVO> getproductChildPartRelationshipList(){
         return dataRetrieveService.getproductChildPartRelationshipList();
     }
-//    @GetMapping("/productChildPart-list")
-//    public Map<Long,List<ChildPartQuantityVO>> getProductChildPartList(){
-//        return  dataRetrieveService.getProductChildPartList();
-//    }
 
     @PostMapping("/getMonthlyPlanList")
     public List<MonthlyPlanEntityVO> getMonthlyPlanVOList(@RequestBody CreationDateVO creationDateVO){

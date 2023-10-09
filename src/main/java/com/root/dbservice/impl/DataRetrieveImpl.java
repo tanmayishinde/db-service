@@ -1,7 +1,6 @@
 package com.root.dbservice.impl;
 
 import com.root.commondependencies.displayvo.ChildPartDisplayVO;
-import com.root.commondependencies.displayvo.ChildPartQuantityVO;
 import com.root.commondependencies.displayvo.ProductDisplayVO;
 import com.root.commondependencies.vo.CreationDateVO;
 import com.root.commondependencies.vo.MonthlyPlanEntityVO;
@@ -19,9 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class DataRetrieveImpl implements DataRetrieveService {
@@ -76,43 +73,6 @@ public class DataRetrieveImpl implements DataRetrieveService {
     }
 
     @Override
-    public Map<Long, List<ChildPartQuantityVO>> getProductChildPartList() {
-        List<ProductChildPartEntity> productChildPartEntityList = productChildPartRepo.findAll();
-
-        List<ProductChildPartRelationShipVO> productChildPartVOList = new ArrayList<>();
-        for (ProductChildPartEntity productChildPart : productChildPartEntityList) {
-            ProductChildPartRelationShipVO productChildPartVO = new ProductChildPartRelationShipVO();
-            productChildPartVO.setProductId(productChildPart.getProductId());
-            productChildPartVO.setChildPartId(productChildPart.getChildPartId());
-            productChildPartVO.setChildPartQuantity(productChildPart.getQuantity());
-            productChildPartVOList.add(productChildPartVO);
-        }
-        Map<Long, List<ChildPartQuantityVO>> partQuantityVOMap = new HashMap<>();
-        for (ProductChildPartRelationShipVO productChildPartVO : productChildPartVOList) {
-            if (partQuantityVOMap.containsKey(productChildPartVO.getProductId())) {
-                ChildPartQuantityVO childPartQuantityVO = new ChildPartQuantityVO();
-                childPartQuantityVO.setChildPartId(productChildPartVO.getChildPartId());
-                childPartQuantityVO.setChildPartQuantity(productChildPartVO.getChildPartQuantity());
-                partQuantityVOMap.get(productChildPartVO.getProductId()).add(childPartQuantityVO);
-            } else {
-                List<ChildPartQuantityVO> childPartQuantityVOList = new ArrayList<>();
-                ChildPartQuantityVO childPartQuantityVO = new ChildPartQuantityVO();
-                childPartQuantityVO.setChildPartId(productChildPartVO.getChildPartId());
-                childPartQuantityVO.setChildPartQuantity(productChildPartVO.getChildPartQuantity());
-                childPartQuantityVOList.add(childPartQuantityVO);
-                partQuantityVOMap.put(productChildPartVO.getProductId(), childPartQuantityVOList);
-            }
-        }
-
-        return partQuantityVOMap;
-
-//        Map<Long, List<ProductChildPartVO>> collMap =
-//                productChildPartVOList.stream()
-//                        .collect(Collectors.groupingBy(productChildPartEntity
-//                                ->productChildPartEntity.getProductId()));
-    }
-
-    @Override
     public List<MonthlyPlanEntityVO> getMonthlyPlanVOList(CreationDateVO creationDateVO) {
         List<MonthlyPlanEntityVO> monthlyPlanEntityVOList = new ArrayList<>();
 
@@ -131,13 +91,6 @@ public class DataRetrieveImpl implements DataRetrieveService {
             monthlyPlanEntityVOList.add(monthlyPlanEntityVO);
         }
 
-
-//        if (creationDateVO.getStartDate().equals(monthlyPlanEntityVO.getCreationDate())
-//                && creationDateVO.getEndDate().equals(monthlyPlanEntityVO.getCreationDate())) {
-//        monthlyPlanResponseVO.setStartDate(monthlyPlanEntityVO.getCreationDate());
-//        monthlyPlanResponseVO.setEndDate(monthlyPlanEntityVO.getCreationDate());
-//        monthlyPlanResponseVO.setMonthlyDisplayVOList(
-//                getMonthlyPlanVODisplayList(creationDateVO));
         return monthlyPlanEntityVOList;
     }
 
